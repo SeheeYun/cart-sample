@@ -18,8 +18,8 @@ function Item({ item }: Props) {
   return (
     <li className={styles.item}>
       <div className={styles.item__text}>
-        <p>시술명</p>
-        <p>20,000원</p>
+        <p>{name}</p>
+        <p>{price}원</p>
       </div>
       <div>
         <button className={styles.item__delete}>
