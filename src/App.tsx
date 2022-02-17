@@ -6,7 +6,7 @@ import {
   faXmark,
   faCirclePlus,
 } from '@fortawesome/free-solid-svg-icons';
-import Item, { ItemComponent } from './components/item';
+import Item, { ItemComponent } from './components/item/item';
 
 type Items = {
   [key: string]: ItemComponent;
@@ -16,8 +16,19 @@ function App() {
   const [items, setItems] = useState<Items>({});
   const [discounts, setDiscounts] = useState({});
   const [currencyCode, setCurrencyCode] = useState('KRW');
+  const [count, setCount] = useState(1);
 
-  console.log(items);
+  const increase = () => {
+    setCount(pre => {
+      return pre >= 100 ? 100 : ++pre;
+    });
+  };
+
+  const decrease = () => {
+    setCount(pre => {
+      return pre <= 1 ? 1 : --pre;
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,37 +55,42 @@ function App() {
 
   return (
     <div id="App">
-      <header className="header">
-        <button>
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
-        <div>윤세희</div>
-        <button>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
-      </header>
-      <main className="main">
-        <div className="main__btns">
-          <button>
-            <FontAwesomeIcon icon={faCirclePlus} />
-            시술
+      <div className="app-container">
+        <header className="header">
+          <button className="header__btn">
+            <FontAwesomeIcon icon={faXmark} />
           </button>
-          <button>
-            <FontAwesomeIcon icon={faCirclePlus} />
-            할인
+          <div className="header__title">
+            <p>윤세희</p>
+            <p>결제 목록</p>
+          </div>
+          <button className="header__btn">
+            <FontAwesomeIcon icon={faPlus} />
           </button>
+        </header>
+        <main className="main">
+          <div className="main__btns">
+            <button>
+              <FontAwesomeIcon icon={faCirclePlus} /> 시술
+            </button>
+            <button>
+              <FontAwesomeIcon icon={faCirclePlus} /> 할인
+            </button>
+          </div>
           <ul>
             {Object.keys(items).map(key => (
-              <Item item={items[key]} />
+              <Item key={key} item={items[key]} />
             ))}
-            <li>시술명</li>
           </ul>
-        </div>
-      </main>
-      <footer className="footer">
-        <div>0원</div>
-        <button>다음</button>
-      </footer>
+        </main>
+        <footer className="footer">
+          <div className="footer__text">
+            <p>합계</p>
+            <p>0원</p>
+          </div>
+          <button className="footer__btn">다음</button>
+        </footer>
+      </div>
     </div>
   );
 }
