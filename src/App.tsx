@@ -7,6 +7,10 @@ import {
   faCirclePlus,
 } from '@fortawesome/free-solid-svg-icons';
 import Item, { ItemComponent } from './components/item/item';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Cart from './container/cart';
+import Service from './container/service';
+import Discount from './container/discount';
 
 type Items = {
   [key: string]: ItemComponent;
@@ -54,44 +58,52 @@ function App() {
   }, []);
 
   return (
-    <div id="App">
-      <div className="app-container">
-        <header className="header">
-          <button className="header__btn">
-            <FontAwesomeIcon icon={faXmark} />
-          </button>
-          <div className="header__title">
-            <p>윤세희</p>
-            <p>결제 목록</p>
-          </div>
-          <button className="header__btn">
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </header>
-        <main className="main">
-          <div className="main__btns">
-            <button>
-              <FontAwesomeIcon icon={faCirclePlus} /> 시술
-            </button>
-            <button>
-              <FontAwesomeIcon icon={faCirclePlus} /> 할인
-            </button>
-          </div>
-          <ul>
-            {Object.keys(items).map(key => (
-              <Item key={key} item={items[key]} />
-            ))}
-          </ul>
-        </main>
-        <footer className="footer">
-          <div className="footer__text">
-            <p>합계</p>
-            <p>0원</p>
-          </div>
-          <button className="footer__btn">다음</button>
-        </footer>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Cart />} />
+        <Route path="/service" element={<Service />} />
+        <Route path="/discount" element={<Discount />} />
+      </Routes>
+    </BrowserRouter>
+
+    // <div id="App">
+    //   <div className="app-container">
+    //     <header className="header">
+    //       <button className="header__btn">
+    //         <FontAwesomeIcon icon={faXmark} />
+    //       </button>
+    //       <div className="header__title">
+    //         <p>윤세희</p>
+    //         <p>결제 목록</p>
+    //       </div>
+    //       <button className="header__btn">
+    //         <FontAwesomeIcon icon={faPlus} />
+    //       </button>
+    //     </header>
+    //     <main className="main">
+    //       <div className="main__btns">
+    //         <button>
+    //           <FontAwesomeIcon icon={faCirclePlus} /> 시술
+    //         </button>
+    //         <button>
+    //           <FontAwesomeIcon icon={faCirclePlus} /> 할인
+    //         </button>
+    //       </div>
+    //       <ul>
+    //         {Object.keys(items).map(key => (
+    //           <Item key={key} item={items[key]} />
+    //         ))}
+    //       </ul>
+    //     </main>
+    //     <footer className="footer">
+    //       <div className="footer__text">
+    //         <p>합계</p>
+    //         <p>0원</p>
+    //       </div>
+    //       <button className="footer__btn">다음</button>
+    //     </footer>
+    //   </div>
+    // </div>
   );
 }
 

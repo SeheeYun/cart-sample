@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import styles from './item.module.css';
 
 type Props = {
@@ -27,7 +27,7 @@ function Item({ item }: Props) {
         </button>
         <div className={styles.item__counter}>
           <button className={styles.item__decrement}>
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faMinus} />
           </button>
           <input
             className={styles.item__count}
