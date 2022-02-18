@@ -1,6 +1,7 @@
 import BaseContainer from './base';
 import Item, { ItemComponent } from '../components/item/item';
 import { useState } from 'react';
+import { useStore } from '../store/store';
 
 type Props = {
   items: Items;
@@ -11,6 +12,7 @@ type Items = {
 };
 
 function Service({ items }: Props) {
+  const { user } = useStore();
   const [checkedItems, setCheckedItems] = useState<Items>({});
 
   console.log(checkedItems);

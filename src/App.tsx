@@ -4,6 +4,7 @@ import Cart from './container/cart';
 import Service from './container/service';
 import Discount from './container/discount';
 import { useEffect, useState } from 'react';
+import Store from './store/store';
 
 function App() {
   const [items, setItems] = useState({});
@@ -33,13 +34,15 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Cart />} />
-        <Route path="/service" element={<Service items={items} />} />
-        <Route path="/discount" element={<Discount />} />
-      </Routes>
-    </BrowserRouter>
+    <Store>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Cart />} />
+          <Route path="/service" element={<Service items={items} />} />
+          <Route path="/discount" element={<Discount />} />
+        </Routes>
+      </BrowserRouter>
+    </Store>
   );
 }
 
