@@ -1,9 +1,9 @@
 import BaseContainer from './base';
 import { useStore } from '../store/store';
-import ItemComponent from '../components/item/item';
+import MenuItem from '../components/item/menuItem';
 
 function Discount() {
-  const { discounts } = useStore();
+  const { discounts, addCheckedItem, deleteCheckedItem } = useStore();
 
   return (
     <BaseContainer
@@ -13,9 +13,11 @@ function Discount() {
     >
       <ul>
         {Object.keys(discounts).map(key => (
-          <ItemComponent
+          <MenuItem
             key={key}
             item={{ ...discounts[key], id: key, checked: false }}
+            addCheckedItem={addCheckedItem}
+            deleteCheckedItem={deleteCheckedItem}
           />
         ))}
       </ul>

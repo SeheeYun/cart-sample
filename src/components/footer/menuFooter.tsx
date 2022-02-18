@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../../store/store';
+import { useStore } from '../../store/store';
 
 type Props = {
   text?: string;

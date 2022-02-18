@@ -1,11 +1,20 @@
 .item {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
   text-align: start;
   padding: 10px 0;
   border-bottom: 1px dashed var(--light-gray-color);
   line-height: 1.2rem;
+}
+
+.item_label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.item_label > input {
+  margin-right: var(--padding);
 }
 
 .item__text {
@@ -30,6 +39,8 @@
 }
 
 .item__counter {
+  margin-left: 10px;
+  width: 94px;
   background-color: #ececf0;
   color: var(--dark-gray-color);
 }

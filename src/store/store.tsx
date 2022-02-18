@@ -16,6 +16,8 @@ type ContextType = {
   addCheckedItem: (item: Item) => void;
   deleteCheckedItem: (item: Item) => void;
   addCartItems: () => void;
+  deleteCartItem: (item: Item) => void;
+  resetChecked: () => void;
 };
 const ContextDefaultValues: ContextType = {
   items: {},
@@ -24,18 +26,21 @@ const ContextDefaultValues: ContextType = {
   addCheckedItem: () => {},
   deleteCheckedItem: () => {},
   addCartItems: () => {},
+  deleteCartItem: () => {},
+  resetChecked: () => {},
 };
 const Context = createContext<ContextType>(ContextDefaultValues);
 export function useStore() {
   return useContext(Context);
 }
+
 export type Item = {
-  id: string;
+  readonly id: string;
+  readonly name: string;
   checked: boolean;
-  name: string;
-  price?: number;
+  readonly price?: number;
+  readonly rate?: number;
   count?: number;
-  rate?: number;
 };
 export type Items = {
   [key: string]: Item;
@@ -44,31 +49,39 @@ export type Items = {
 const Store = ({ children }: Props) => {
   const [items, setItems] = useState({});
   const [discounts, setDiscounts] = useState({});
-  const [cartItems, setCartItems] = useState({});
+  const [cartItems, setCartItems] = useState<Items>({});
   const [checkedItems, setCheckedItems] = useState<Items>({});
 
-  console.log(cartItems);
-
   const addCheckedItem = (item: Item) => {
-    setCheckedItems(preItems => {
-      const items = { ...preItems };
-      items[item.id] = item;
-      return items;
+    setCheckedItems(items => {
+      const updateItems = { ...items };
+      updateItems[item.id] = item;
+      return updateItems;
     });
   };
-
   const deleteCheckedItem = (item: Item) => {
-    setCheckedItems(preItems => {
-      const items = { ...preItems };
-      delete items[item.id];
-      return items;
+    setCheckedItems(items => {
+      const updateItems = { ...items };
+      delete updateItems[item.id];
+      return updateItems;
     });
   };
 
   const addCartItems = () => {
-    setCartItems(cartItems => {
-      return { ...cartItems, ...checkedItems };
+    setCartItems(items => {
+      return { ...items, ...checkedItems };
     });
+  };
+  const deleteCartItem = (item: Item) => {
+    setCartItems(items => {
+      const updateItems = { ...items };
+      delete updateItems[item.id];
+      return updateItems;
+    });
+  };
+
+  const resetChecked = () => {
+    setCheckedItems({});
   };
 
   useEffect(() => {
@@ -100,6 +113,8 @@ const Store = ({ children }: Props) => {
     addCheckedItem,
     deleteCheckedItem,
     addCartItems,
+    deleteCartItem,
+    resetChecked,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

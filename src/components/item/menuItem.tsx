@@ -1,22 +1,20 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import styles from './item.module.css';
-import { Item, useStore } from '../../store/store';
+import { Item } from '../../store/store';
 
 type Props = {
   item: Item;
+  addCheckedItem: (item: Item) => void;
+  deleteCheckedItem: (item: Item) => void;
 };
 
-function ItemComponent({ item }: Props) {
-  const { addCheckedItem, deleteCheckedItem } = useStore();
-
+function MenuItem({ item, addCheckedItem, deleteCheckedItem }: Props) {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.checked ? addCheckedItem(item) : deleteCheckedItem(item);
   };
 
   return (
     <li className={styles.item}>
-      <label>
+      <label className={styles.item_label}>
         <input
           type="checkbox"
           defaultChecked={item.checked}
@@ -34,4 +32,4 @@ function ItemComponent({ item }: Props) {
   );
 }
 
-export default ItemComponent;
+export default MenuItem;

@@ -1,7 +1,7 @@
-import Header from '../components/common/header/header';
-import Footer from '../components/common/footer/footer';
-import MenuFooter from '../components/common/footer/menuFooter';
-import MenuHeader from '../components/common/header/menuHeader';
+import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
+import MenuFooter from '../components/footer/menuFooter';
+import MenuHeader from '../components/header/menuHeader';
 
 type Props = {
   type: string;

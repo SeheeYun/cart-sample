@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BaseContainer from './base';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/store';
+import ServiceItem from '../components/item/serviceItem';
 
 function Cart() {
-  const { cartItems } = useStore();
+  const { cartItems, deleteCartItem, resetChecked } = useStore();
+
+  useEffect(() => {
+    resetChecked();
+  }, []);
 
   return (
     <BaseContainer type={'cart'}>
@@ -25,7 +30,11 @@ function Cart() {
         </div>
         <ul>
           {Object.keys(cartItems).map(key => (
-            <div key={key}>{cartItems[key].name}</div>
+            <ServiceItem
+              key={key}
+              item={{ ...cartItems[key], id: key, checked: false }}
+              deleteCartItem={deleteCartItem}
+            />
           ))}
         </ul>
       </>
