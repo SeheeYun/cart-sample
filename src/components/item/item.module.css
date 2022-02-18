@@ -8,11 +8,16 @@
   line-height: 1.2rem;
 }
 
-.item__text > p:nth-child(1) {
+.item__text {
   color: var(--dark-gray-color);
 }
-.item__text > p:nth-child(2) {
+.item__price {
   font-weight: bold;
+  color: #222222;
+}
+.item__rate {
+  font-weight: bold;
+  color: var(--pink-color);
 }
 
 .item__delete {

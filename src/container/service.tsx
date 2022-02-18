@@ -1,47 +1,21 @@
 import BaseContainer from './base';
-import Item, { ItemComponent } from '../components/item/item';
-import { useState } from 'react';
 import { useStore } from '../store/store';
+import ItemComponent from '../components/item/item';
 
-type Props = {
-  items: Items;
-};
-
-type Items = {
-  [key: string]: ItemComponent;
-};
-
-function Service({ items }: Props) {
-  const { user } = useStore();
-  const [checkedItems, setCheckedItems] = useState<Items>({});
-
-  console.log(checkedItems);
-
-  const addCheckedItem = (item: ItemComponent) => {
-    setCheckedItems(preItems => {
-      const items = { ...preItems };
-      items[item.id] = item;
-      return items;
-    });
-  };
-
-  const deleteCheckedItem = (item: ItemComponent) => {
-    setCheckedItems(preItems => {
-      const items = { ...preItems };
-      delete items[item.id];
-      return items;
-    });
-  };
+function Service() {
+  const { items } = useStore();
 
   return (
-    <BaseContainer type={'menu'}>
+    <BaseContainer
+      type={'menu'}
+      title={'시술 메뉴'}
+      text={'서비스를 선택하세요. (다수 선택 가능)'}
+    >
       <ul>
         {Object.keys(items).map(key => (
-          <Item
+          <ItemComponent
             key={key}
             item={{ ...items[key], id: key, checked: false }}
-            addCheckedItem={addCheckedItem}
-            deleteCheckedItem={deleteCheckedItem}
           />
         ))}
       </ul>

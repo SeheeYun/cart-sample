@@ -3,8 +3,11 @@ import BaseContainer from './base';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useStore } from '../store/store';
 
 function Cart() {
+  const { cartItems } = useStore();
+
   return (
     <BaseContainer type={'cart'}>
       <>
@@ -20,7 +23,11 @@ function Cart() {
             </Link>
           </button>
         </div>
-        <ul></ul>
+        <ul>
+          {Object.keys(cartItems).map(key => (
+            <div key={key}>{cartItems[key].name}</div>
+          ))}
+        </ul>
       </>
     </BaseContainer>
   );

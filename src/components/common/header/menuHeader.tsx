@@ -2,7 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
-function Header() {
+type Props = {
+  title?: string;
+};
+
+function MenuHeader({ title }: Props) {
   const navigate = useNavigate();
 
   return (
@@ -16,8 +20,7 @@ function Header() {
         <FontAwesomeIcon icon={faXmark} />
       </button>
       <div className="header__title">
-        <p>윤세희</p>
-        <p>결제 목록</p>
+        <p>{title}</p>
       </div>
       <button className="header__btn">
         <FontAwesomeIcon icon={faPlus} />
@@ -26,4 +29,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default MenuHeader;

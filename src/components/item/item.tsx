@@ -1,23 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import styles from './item.module.css';
+import { Item, useStore } from '../../store/store';
 
 type Props = {
-  item: ItemComponent;
-  addCheckedItem: (item: ItemComponent) => void;
-  deleteCheckedItem: (item: ItemComponent) => void;
+  item: Item;
 };
 
-export type ItemComponent = {
-  id: string;
-  checked: boolean;
-  count: number;
-  name: string;
-  price: number;
-};
-
-function Item({ item, addCheckedItem, deleteCheckedItem }: Props) {
-  const { count, name, price, checked } = item;
+function ItemComponent({ item }: Props) {
+  const { addCheckedItem, deleteCheckedItem } = useStore();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.checked ? addCheckedItem(item) : deleteCheckedItem(item);
@@ -28,18 +19,19 @@ function Item({ item, addCheckedItem, deleteCheckedItem }: Props) {
       <label>
         <input
           type="checkbox"
-          defaultChecked={checked}
+          defaultChecked={item.checked}
           onChange={e => {
             onChange(e);
           }}
         />
         <div className={styles.item__text}>
-          <p>{name}</p>
-          <p>{price}원</p>
+          <p>{item.name}</p>
+          {item.price && <p className={styles.item__price}>{item.price}원</p>}
+          {item.rate && <p className={styles.item__rate}>{item.rate}%</p>}
         </div>
       </label>
     </li>
   );
 }
 
-export default Item;
+export default ItemComponent;

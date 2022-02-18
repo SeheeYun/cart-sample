@@ -34,6 +34,7 @@
 }
 
 .header {
+  height: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,6 +44,9 @@
 .header__btn {
   color: var(--dark-gray-color);
   font-size: 1.4rem;
+}
+.header__btn_none {
+  visibility: hidden;
 }
 .header__title > p:nth-child(2) {
   font-size: 0.8rem;
@@ -82,6 +86,7 @@
   padding: var(--padding);
 }
 .footer__text {
+  height: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;

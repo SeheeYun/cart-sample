@@ -1,10 +1,27 @@
-function MenuFooter() {
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../../store/store';
+
+type Props = {
+  text?: string;
+};
+
+function MenuFooter({ text }: Props) {
+  const navigate = useNavigate();
+  const { addCartItems } = useStore();
+
+  const onClick = () => {
+    navigate('/');
+    addCartItems();
+  };
+
   return (
     <footer className="footer">
       <div className="footer__text">
-        <p>서비스를 선택하세요. (다수 선택 가능)</p>
+        <p>{text}</p>
       </div>
-      <button className="footer__btn">다음</button>
+      <button className="footer__btn" onClick={onClick}>
+        다음
+      </button>
     </footer>
   );
 }
