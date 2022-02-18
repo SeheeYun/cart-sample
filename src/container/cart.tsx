@@ -2,54 +2,9 @@ import { useEffect, useState } from 'react';
 import BaseContainer from './base';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import Item, { ItemComponent } from '../components/item/item';
 import { Link } from 'react-router-dom';
 
-type Items = {
-  [key: string]: ItemComponent;
-};
-
 function Cart() {
-  const [items, setItems] = useState<Items>({});
-  const [discounts, setDiscounts] = useState({});
-  const [currencyCode, setCurrencyCode] = useState('KRW');
-  const [count, setCount] = useState(1);
-
-  const increase = () => {
-    setCount(pre => {
-      return pre >= 100 ? 100 : ++pre;
-    });
-  };
-
-  const decrease = () => {
-    setCount(pre => {
-      return pre <= 1 ? 1 : --pre;
-    });
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = process.env.REACT_APP_COLAVOLAB_API;
-      if (!url) {
-        return;
-      }
-
-      const res = await fetch(url, {
-        method: 'GET',
-      });
-      const data = await res.json();
-      setItems(data.items);
-      setDiscounts(data.discounts);
-      setCurrencyCode(data.currency_code);
-    };
-
-    try {
-      fetchData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
   return (
     <BaseContainer type={'cart'}>
       <>
@@ -65,11 +20,7 @@ function Cart() {
             </Link>
           </button>
         </div>
-        <ul>
-          {Object.keys(items).map(key => (
-            <Item key={key} item={items[key]} />
-          ))}
-        </ul>
+        <ul></ul>
       </>
     </BaseContainer>
   );

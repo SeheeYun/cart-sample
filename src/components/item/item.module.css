@@ -1,10 +1,10 @@
 .item {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   text-align: start;
   padding: 10px 0;
-  border-top: 1px dashed var(--light-gray-color);
+  border-bottom: 1px dashed var(--light-gray-color);
   line-height: 1.2rem;
 }
 

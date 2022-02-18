@@ -1,6 +1,6 @@
 import Header from '../components/common/header';
 import Footer from '../components/common/footer/footer';
-import { useEffect } from 'react';
+import MenuFooter from '../components/common/footer/menuFooter';
 
 type Props = {
   type: string;
@@ -12,7 +12,8 @@ function BaseContainer({ type, children }: Props) {
     <div id="App">
       <Header />
       <main className="main">{children}</main>
-      <Footer />
+      {type === 'cart' && <Footer />}
+      {type === 'menu' && <MenuFooter />}
     </div>
   );
 }

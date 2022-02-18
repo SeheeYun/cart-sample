@@ -32,15 +32,13 @@
   text-align: center;
   padding: 10px;
 }
-#App > * {
-  padding: var(--padding);
-}
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--light-gray-color);
+  /* border-bottom: 1px solid var(--light-gray-color); */
+  padding: var(--padding);
 }
 .header__btn {
   color: var(--dark-gray-color);
@@ -54,11 +52,12 @@
 .main {
   height: 100%;
   overflow: overlay;
+  padding: 0 var(--padding);
 }
 .main__btns {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 .main__btns > button {
   width: 48%;
@@ -80,6 +79,7 @@
 
 .footer {
   border-top: 1px solid var(--light-gray-color);
+  padding: var(--padding);
 }
 .footer__text {
   display: flex;
