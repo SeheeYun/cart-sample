@@ -1,32 +1,33 @@
 import styles from './modal.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Item, Items } from '../../store/store';
 import MenuItem from '../item/menuItem';
 
 type Props = {
-  name: string;
+  item: Item;
   cartItems: Items;
   toggleModal: () => void;
-  addExcepted: (item: Item) => void;
-  deleteExcepted: (item: Item) => void;
+  addExcluded: (item: Item) => void;
+  deleteExcluded: (item: Item) => void;
+  onDoneClick: () => void;
 };
 
 function DiscountModal({
-  name,
+  item,
   cartItems,
   toggleModal,
-  addExcepted,
-  deleteExcepted,
+  addExcluded,
+  deleteExcluded,
+  onDoneClick,
 }: Props) {
-  const offChecked = () => {};
+  const onClick = () => {
+    onDoneClick();
+    toggleModal();
+  };
+
   return (
     <div className={styles.modal__bg}>
       <div className={styles.modal}>
-        <p>{name}</p>
-        <button onClick={toggleModal}>
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
+        <p>{item.name}</p>
         <ul>
           {Object.keys(cartItems)
             .filter(key => key[0] === 'i')
@@ -34,13 +35,13 @@ function DiscountModal({
               <MenuItem
                 key={key}
                 item={cartItems[key]}
-                checked={true}
-                onChecked={deleteExcepted}
-                offChecked={addExcepted}
+                checked={!item.excluded.includes(key)}
+                onChecked={deleteExcluded}
+                offChecked={addExcluded}
               />
             ))}
         </ul>
-        <button>확인</button>
+        <button onClick={onClick}>확인</button>
       </div>
     </div>
   );

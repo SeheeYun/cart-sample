@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BaseContainer from './base';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -8,23 +8,16 @@ import ServiceItem from '../components/item/serviceItem';
 import DiscountItem from '../components/item/discountItem';
 
 function Cart() {
-  const {
-    cartItems,
-    deleteCartItem,
-    resetChecked,
-    increase,
-    decrease,
-    setItemTotal,
-  } = useStore();
-
-  useEffect(() => {
-    resetChecked();
-  }, []);
+  const { cartItems, resetChecked } = useStore();
 
   const total = Object.keys(cartItems)
     .filter(key => cartItems[key].total)
     .map(key => cartItems[key].total)
     .reduce((a, b) => a + b, 0);
+
+  useEffect(() => {
+    resetChecked();
+  }, []);
 
   return (
     <BaseContainer type={'cart'} total={total}>
@@ -45,25 +38,12 @@ function Cart() {
           {Object.keys(cartItems)
             .filter(key => key[0] === 'i')
             .map(key => (
-              <ServiceItem
-                key={key}
-                item={cartItems[key]}
-                deleteCartItem={deleteCartItem}
-                increase={increase}
-                decrease={decrease}
-                setItemTotal={setItemTotal}
-              />
+              <ServiceItem key={key} item={cartItems[key]} />
             ))}
           {Object.keys(cartItems)
             .filter(key => key[0] === 'd')
             .map(key => (
-              <DiscountItem
-                key={key}
-                item={cartItems[key]}
-                cartItems={cartItems}
-                deleteCartItem={deleteCartItem}
-                setItemTotal={setItemTotal}
-              />
+              <DiscountItem key={key} item={cartItems[key]} />
             ))}
         </ul>
       </>

@@ -14,7 +14,7 @@ function Discount() {
         {Object.keys(discounts).map(key => (
           <MenuItem
             key={key}
-            item={{ ...discounts[key], id: key }}
+            item={{ ...discounts[key], id: key, excluded: [] }}
             checked={false}
             onChecked={addCheckedItem}
             offChecked={deleteCheckedItem}

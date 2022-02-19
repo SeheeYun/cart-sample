@@ -1,24 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import styles from './item.module.css';
-import { Item } from '../../store/store';
-import React, { useEffect } from 'react';
+import { Item, useStore } from '../../store/store';
+import { useEffect } from 'react';
 
 type Props = {
   item: Item;
-  deleteCartItem: (item: Item) => void;
-  increase: (item: Item) => void;
-  decrease: (item: Item) => void;
-  setItemTotal: (id: string, total: number) => void;
 };
 
-function ServiceItem({
-  item,
-  deleteCartItem,
-  increase,
-  decrease,
-  setItemTotal,
-}: Props) {
+function ServiceItem({ item }: Props) {
+  const { deleteCartItem, increase, decrease, setItemTotal } = useStore();
   const { name, count, price, id } = item;
   const total = count * price;
 

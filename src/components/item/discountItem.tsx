@@ -1,30 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from './item.module.css';
-import { Item, Items } from '../../store/store';
+import { Item, useStore } from '../../store/store';
 import { useEffect, useState } from 'react';
 import DiscountModal from '../modal/discountModal';
 
 type Props = {
   item: Item;
-  cartItems: Items;
-  deleteCartItem: (item: Item) => void;
-  setItemTotal: (id: string, total: number) => void;
 };
 
-function DiscountItem({
-  item,
-  cartItems,
-  deleteCartItem,
-  setItemTotal,
-}: Props) {
-  const { name, rate, id } = item;
-  const [excepted, setExcepted] = useState<Items>({});
+function DiscountItem({ item }: Props) {
+  const { cartItems, deleteCartItem, setItemTotal, setExcludedItems } =
+    useStore();
   const [isModal, setIsModal] = useState(false);
+  const [excluded, setExcluded] = useState<string[]>([]);
+  const { name, rate, id } = item;
 
   const total =
     Object.keys(cartItems)
-      .filter(key => key[0] === 'i' && !excepted[key])
+      .filter(key => key[0] === 'i' && !item.excluded.includes(key))
       .map(key => {
         return cartItems[key].price * cartItems[key].count * rate;
       })
@@ -38,19 +32,15 @@ function DiscountItem({
     setIsModal(!isModal);
   };
 
-  const addExcepted = (item: Item) => {
-    setExcepted(items => {
-      const updated = { ...items };
-      updated[item.id] = item;
-      return updated;
-    });
+  const addExcluded = (item: Item) => {
+    setExcluded(keys => [...keys, item.id]);
   };
-  const deleteExcepted = (item: Item) => {
-    setExcepted(items => {
-      const updated = { ...items };
-      delete updated[item.id];
-      return updated;
-    });
+  const deleteExcluded = (item: Item) => {
+    setExcluded(keys => keys.filter(key => key !== item.id));
+  };
+
+  const onDoneClick = () => {
+    setExcludedItems(id, excluded);
   };
 
   useEffect(() => {
@@ -76,11 +66,12 @@ function DiscountItem({
       </div>
       {isModal && (
         <DiscountModal
-          name={name}
+          item={item}
           cartItems={cartItems}
           toggleModal={toggleModal}
-          addExcepted={addExcepted}
-          deleteExcepted={deleteExcepted}
+          addExcluded={addExcluded}
+          deleteExcluded={deleteExcluded}
+          onDoneClick={onDoneClick}
         />
       )}
     </li>

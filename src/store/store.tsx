@@ -17,6 +17,7 @@ type DiscountItem = {
   readonly id: string;
   readonly name: string;
   readonly rate: number;
+  excluded: string[];
   total: number;
 };
 export type Item = ServiceItem & DiscountItem;
@@ -83,6 +84,13 @@ const Store = ({ children }: Props) => {
     }));
   };
 
+  const setExcludedItems = (id: string, arr: string[]) => {
+    setCartItems(items => ({
+      ...items,
+      [id]: { ...items[id], excluded: arr },
+    }));
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const url = process.env.REACT_APP_COLAVOLAB_API;
@@ -117,6 +125,7 @@ const Store = ({ children }: Props) => {
     increase,
     decrease,
     setItemTotal,
+    setExcludedItems,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -139,6 +148,7 @@ type ContextType = {
   increase: (item: Item) => void;
   decrease: (item: Item) => void;
   setItemTotal: (id: string, total: number) => void;
+  setExcludedItems: (id: string, arr: string[]) => void;
 };
 const ContextDefaultValues: ContextType = {
   items: {},
@@ -152,6 +162,7 @@ const ContextDefaultValues: ContextType = {
   increase: () => {},
   decrease: () => {},
   setItemTotal: () => {},
+  setExcludedItems: () => {},
 };
 const Context = createContext<ContextType>(ContextDefaultValues);
 export function useStore() {

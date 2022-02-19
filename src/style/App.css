@@ -25,7 +25,7 @@
   border-radius: 40px;
   box-shadow: -2px -2px 4px 0px #ffffff, 50px 50px 50px 0px rgba(0, 0, 0, 0.25);
   height: 700px;
-  width: 350px;
+  width: 360px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -73,10 +73,10 @@
   border-radius: var(--button-border-radius);
   color: var(--dark-gray-color);
 }
-.main::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 1vw;
 }
-.main::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--light-gray-color);
   border-radius: 100px;
 }
