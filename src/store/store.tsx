@@ -31,11 +31,7 @@ const Store = ({ children }: Props) => {
   const [checkedItems, setCheckedItems] = useState<Items>({});
 
   const addCheckedItem = (item: Item) => {
-    setCheckedItems(items => {
-      const updated = { ...items };
-      updated[item.id] = item;
-      return updated;
-    });
+    setCheckedItems(items => ({ ...items, [item.id]: item }));
   };
   const deleteCheckedItem = (item: Item) => {
     setCheckedItems(items => {
@@ -49,9 +45,7 @@ const Store = ({ children }: Props) => {
   };
 
   const addCartItems = () => {
-    setCartItems(items => {
-      return { ...items, ...checkedItems };
-    });
+    setCartItems(items => ({ ...items, ...checkedItems }));
   };
   const deleteCartItem = (item: Item) => {
     setCartItems(items => {
@@ -83,11 +77,10 @@ const Store = ({ children }: Props) => {
   };
 
   const setItemTotal = (id: string, total: number) => {
-    setCartItems(items => {
-      const updated = { ...items };
-      updated[id]['total'] = total;
-      return updated;
-    });
+    setCartItems(items => ({
+      ...items,
+      [id]: { ...items[id], total: total },
+    }));
   };
 
   useEffect(() => {
