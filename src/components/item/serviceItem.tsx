@@ -31,7 +31,7 @@ function ServiceItem({ item }: Props) {
     <li className={styles.item}>
       <div className={styles.item__text}>
         <p>{name}</p>
-        <p className={styles.item__price}>{total}원</p>
+        <p className={styles.item__price}>{total.toLocaleString()}원</p>
       </div>
       <div>
         <button className={styles.item__delete} onClick={onDelete}>

@@ -27,7 +27,9 @@ function MenuItem({ item, checked, onChecked, offChecked }: Props) {
         />
         <div className={styles.item__text}>
           <p>{name}</p>
-          {price && <p className={styles.item__price}>{price}원</p>}
+          {price && (
+            <p className={styles.item__price}>{price.toLocaleString()}원</p>
+          )}
           {rate && <p className={styles.item__rate}>{rate}%</p>}
         </div>
       </label>

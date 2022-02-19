@@ -53,7 +53,7 @@ function DiscountItem({ item }: Props) {
         <p>{name}</p>
         <p></p>
         <p className={styles.item__rate}>
-          {total}원 ({rate}%)
+          {total.toLocaleString()}원 ({rate}%)
         </p>
       </div>
       <div>
