@@ -6,14 +6,22 @@ import React, {
   useState,
 } from 'react';
 
-export type Item = {
+type ServiceItem = {
   readonly id: string;
   readonly name: string;
+  readonly price: number;
+  count: number;
   checked: boolean;
-  readonly price?: number;
-  readonly rate?: number;
-  count?: number;
+  total: number;
 };
+type DiscountItem = {
+  readonly id: string;
+  readonly name: string;
+  readonly rate: number;
+  checked: boolean;
+  total: number;
+};
+export type Item = ServiceItem & DiscountItem;
 export type Items = {
   [key: string]: Item;
 };
@@ -56,23 +64,27 @@ const Store = ({ children }: Props) => {
   };
 
   const increase = (item: Item) => {
-    if (item.count! >= 100) {
+    if (item.count >= 100) {
       return;
     }
     setCartItems(items => {
-      const updated = { ...items };
-      updated[item.id].count = item.count! + 1;
-      return updated;
+      const _items = { ...items };
+      const updated = _items[item.id];
+      updated.count = item.count + 1;
+      updated.total = updated.count * updated.price;
+      return _items;
     });
   };
   const decrease = (item: Item) => {
-    if (item.count! <= 1) {
+    if (item.count <= 1) {
       return;
     }
     setCartItems(items => {
-      const updated = { ...items };
-      updated[item.id].count = item.count! - 1;
-      return updated;
+      const _items = { ...items };
+      const updated = _items[item.id];
+      updated.count = item.count - 1;
+      updated.total = updated.count * updated.price;
+      return _items;
     });
   };
 

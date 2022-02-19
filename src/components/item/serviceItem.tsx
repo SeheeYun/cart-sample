@@ -11,6 +11,7 @@ type Props = {
 };
 
 function ServiceItem({ item, deleteCartItem, increase, decrease }: Props) {
+  const { name, total, count } = item;
   const onDelete = () => {
     deleteCartItem(item);
   };
@@ -25,8 +26,8 @@ function ServiceItem({ item, deleteCartItem, increase, decrease }: Props) {
   return (
     <li className={styles.item}>
       <div className={styles.item__text}>
-        <p>{item.name}</p>
-        <p className={styles.item__price}>{item.price}원</p>
+        <p>{name}</p>
+        <p className={styles.item__price}>{total}원</p>
       </div>
       <div>
         <button className={styles.item__delete} onClick={onDelete}>
@@ -39,7 +40,7 @@ function ServiceItem({ item, deleteCartItem, increase, decrease }: Props) {
           <input
             className={styles.item__count}
             type="text"
-            value={item.count}
+            value={count}
             readOnly
           />
           <button className={styles.item__increment} onClick={onIncrease}>

@@ -15,7 +15,12 @@ function Service() {
         {Object.keys(items).map(key => (
           <MenuItem
             key={key}
-            item={{ ...items[key], id: key, checked: false }}
+            item={{
+              ...items[key],
+              id: key,
+              checked: false,
+              total: items[key].price * items[key].count,
+            }}
             addCheckedItem={addCheckedItem}
             deleteCheckedItem={deleteCheckedItem}
           />
