@@ -6,11 +6,20 @@ import { Item } from '../../store/store';
 type Props = {
   item: Item;
   deleteCartItem: (item: Item) => void;
+  increase: (item: Item) => void;
+  decrease: (item: Item) => void;
 };
 
-function ServiceItem({ item, deleteCartItem }: Props) {
-  const onClick = () => {
+function ServiceItem({ item, deleteCartItem, increase, decrease }: Props) {
+  const onDelete = () => {
     deleteCartItem(item);
+  };
+
+  const onIncrease = () => {
+    increase(item);
+  };
+  const onDecrease = () => {
+    decrease(item);
   };
 
   return (
@@ -21,11 +30,11 @@ function ServiceItem({ item, deleteCartItem }: Props) {
         {item.rate && <p className={styles.item__rate}>{item.rate}%</p>}
       </div>
       <div>
-        <button className={styles.item__delete} onClick={onClick}>
+        <button className={styles.item__delete} onClick={onDelete}>
           <FontAwesomeIcon icon={faXmark} />
         </button>
         <div className={styles.item__counter}>
-          <button className={styles.item__decrement}>
+          <button className={styles.item__decrement} onClick={onDecrease}>
             <FontAwesomeIcon icon={faMinus} />
           </button>
           <input
@@ -34,7 +43,7 @@ function ServiceItem({ item, deleteCartItem }: Props) {
             value={item.count}
             readOnly
           />
-          <button className={styles.item__increment}>
+          <button className={styles.item__increment} onClick={onIncrease}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>

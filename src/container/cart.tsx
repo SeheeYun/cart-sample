@@ -7,7 +7,8 @@ import { useStore } from '../store/store';
 import ServiceItem from '../components/item/serviceItem';
 
 function Cart() {
-  const { cartItems, deleteCartItem, resetChecked } = useStore();
+  const { cartItems, deleteCartItem, resetChecked, increase, decrease } =
+    useStore();
 
   useEffect(() => {
     resetChecked();
@@ -34,6 +35,8 @@ function Cart() {
               key={key}
               item={{ ...cartItems[key], id: key, checked: false }}
               deleteCartItem={deleteCartItem}
+              increase={increase}
+              decrease={decrease}
             />
           ))}
         </ul>

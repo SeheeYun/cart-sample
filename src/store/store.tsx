@@ -6,34 +6,6 @@ import React, {
   useState,
 } from 'react';
 
-type Props = {
-  children: ReactNode;
-};
-type ContextType = {
-  items: Items;
-  discounts: Items;
-  cartItems: Items;
-  addCheckedItem: (item: Item) => void;
-  deleteCheckedItem: (item: Item) => void;
-  addCartItems: () => void;
-  deleteCartItem: (item: Item) => void;
-  resetChecked: () => void;
-};
-const ContextDefaultValues: ContextType = {
-  items: {},
-  discounts: {},
-  cartItems: {},
-  addCheckedItem: () => {},
-  deleteCheckedItem: () => {},
-  addCartItems: () => {},
-  deleteCartItem: () => {},
-  resetChecked: () => {},
-};
-const Context = createContext<ContextType>(ContextDefaultValues);
-export function useStore() {
-  return useContext(Context);
-}
-
 export type Item = {
   readonly id: string;
   readonly name: string;
@@ -54,17 +26,20 @@ const Store = ({ children }: Props) => {
 
   const addCheckedItem = (item: Item) => {
     setCheckedItems(items => {
-      const updateItems = { ...items };
-      updateItems[item.id] = item;
-      return updateItems;
+      const updated = { ...items };
+      updated[item.id] = item;
+      return updated;
     });
   };
   const deleteCheckedItem = (item: Item) => {
     setCheckedItems(items => {
-      const updateItems = { ...items };
-      delete updateItems[item.id];
-      return updateItems;
+      const updated = { ...items };
+      delete updated[item.id];
+      return updated;
     });
+  };
+  const resetChecked = () => {
+    setCheckedItems({});
   };
 
   const addCartItems = () => {
@@ -74,14 +49,31 @@ const Store = ({ children }: Props) => {
   };
   const deleteCartItem = (item: Item) => {
     setCartItems(items => {
-      const updateItems = { ...items };
-      delete updateItems[item.id];
-      return updateItems;
+      const updated = { ...items };
+      delete updated[item.id];
+      return updated;
     });
   };
 
-  const resetChecked = () => {
-    setCheckedItems({});
+  const increase = (item: Item) => {
+    if (item.count! >= 100) {
+      return;
+    }
+    setCartItems(items => {
+      const updated = { ...items };
+      updated[item.id].count = item.count! + 1;
+      return updated;
+    });
+  };
+  const decrease = (item: Item) => {
+    if (item.count! <= 1) {
+      return;
+    }
+    setCartItems(items => {
+      const updated = { ...items };
+      updated[item.id].count = item.count! - 1;
+      return updated;
+    });
   };
 
   useEffect(() => {
@@ -115,9 +107,43 @@ const Store = ({ children }: Props) => {
     addCartItems,
     deleteCartItem,
     resetChecked,
+    increase,
+    decrease,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export default Store;
+
+type Props = {
+  children: ReactNode;
+};
+type ContextType = {
+  items: Items;
+  discounts: Items;
+  cartItems: Items;
+  addCheckedItem: (item: Item) => void;
+  deleteCheckedItem: (item: Item) => void;
+  addCartItems: () => void;
+  deleteCartItem: (item: Item) => void;
+  resetChecked: () => void;
+  increase: (item: Item) => void;
+  decrease: (item: Item) => void;
+};
+const ContextDefaultValues: ContextType = {
+  items: {},
+  discounts: {},
+  cartItems: {},
+  addCheckedItem: () => {},
+  deleteCheckedItem: () => {},
+  addCartItems: () => {},
+  deleteCartItem: () => {},
+  resetChecked: () => {},
+  increase: () => {},
+  decrease: () => {},
+};
+const Context = createContext<ContextType>(ContextDefaultValues);
+export function useStore() {
+  return useContext(Context);
+}
