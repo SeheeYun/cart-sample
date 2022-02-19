@@ -38,38 +38,40 @@
   font-size: 1rem;
 }
 
+.item__edit,
 .item__counter {
-  margin-left: 10px;
-  width: 94px;
+  height: 30px;
   background-color: #ececf0;
   color: var(--dark-gray-color);
+  border: 1px solid var(--light-gray-color);
+  border-radius: 50px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
 }
+.item__edit {
+  width: 60px;
+  text-align: center;
+  display: block;
+}
+.item__counter {
+  width: 96px;
+}
+
 .item__count {
-  width: 34px;
   text-align: center;
   outline: none;
   user-select: none;
-}
-.item__count,
-.item__decrement,
-.item__increment {
-  height: 30px;
-  border: 1px solid var(--light-gray-color);
-}
-.item__decrement,
-.item__increment {
-  color: var(--dark-gray-color);
+  border: none;
+  background: none;
   width: 30px;
+}
+.item__decrement,
+.item__increment {
+  color: var(--gray-color);
+  padding: 0 10px;
 }
 .item__decrement:active,
 .item__increment:active {
-  background: var(--light-gray-color);
-}
-.item__decrement {
-  border-right: none;
-  border-radius: 4px 0 0 4px;
-}
-.item__increment {
-  border-left: none;
-  border-radius: 0 4px 4px 0;
+  color: var(--dark-gray-color);
 }

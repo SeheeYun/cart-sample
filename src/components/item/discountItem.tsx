@@ -23,7 +23,7 @@ function DiscountItem({ item, deleteCartItem }: Props) {
         <button className={styles.item__delete} onClick={onDelete}>
           <FontAwesomeIcon icon={faXmark} />
         </button>
-        <div className={styles.item__counter}>수정</div>
+        <button className={styles.item__edit}>수정</button>
       </div>
     </li>
   );
