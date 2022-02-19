@@ -26,8 +26,7 @@ function ServiceItem({ item, deleteCartItem, increase, decrease }: Props) {
     <li className={styles.item}>
       <div className={styles.item__text}>
         <p>{item.name}</p>
-        {item.price && <p className={styles.item__price}>{item.price}원</p>}
-        {item.rate && <p className={styles.item__rate}>{item.rate}%</p>}
+        <p className={styles.item__price}>{item.price}원</p>
       </div>
       <div>
         <button className={styles.item__delete} onClick={onDelete}>
