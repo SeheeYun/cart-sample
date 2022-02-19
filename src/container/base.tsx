@@ -7,16 +7,17 @@ type Props = {
   type: string;
   title?: string;
   text?: string;
+  total?: number;
   children: JSX.Element;
 };
 
-function BaseContainer({ type, title, text, children }: Props) {
+function BaseContainer({ type, title, text, total, children }: Props) {
   return (
     <div id="App">
       {type === 'cart' && <Header />}
       {type === 'menu' && <MenuHeader title={title} />}
       <main className="main">{children}</main>
-      {type === 'cart' && <Footer />}
+      {type === 'cart' && <Footer total={total} />}
       {type === 'menu' && <MenuFooter text={text} />}
     </div>
   );

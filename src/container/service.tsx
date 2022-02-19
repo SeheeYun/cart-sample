@@ -18,11 +18,10 @@ function Service() {
             item={{
               ...items[key],
               id: key,
-              checked: false,
-              total: items[key].price * items[key].count,
             }}
-            addCheckedItem={addCheckedItem}
-            deleteCheckedItem={deleteCheckedItem}
+            checked={false}
+            onChecked={addCheckedItem}
+            offChecked={deleteCheckedItem}
           />
         ))}
       </ul>

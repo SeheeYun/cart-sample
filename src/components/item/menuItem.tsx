@@ -3,13 +3,16 @@ import { Item } from '../../store/store';
 
 type Props = {
   item: Item;
-  addCheckedItem: (item: Item) => void;
-  deleteCheckedItem: (item: Item) => void;
+  checked: boolean;
+  onChecked: (item: Item) => void;
+  offChecked: (item: Item) => void;
 };
 
-function MenuItem({ item, addCheckedItem, deleteCheckedItem }: Props) {
+function MenuItem({ item, checked, onChecked, offChecked }: Props) {
+  const { name, price, rate } = item;
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.checked ? addCheckedItem(item) : deleteCheckedItem(item);
+    e.target.checked ? onChecked(item) : offChecked(item);
   };
 
   return (
@@ -17,15 +20,15 @@ function MenuItem({ item, addCheckedItem, deleteCheckedItem }: Props) {
       <label className={styles.item_label}>
         <input
           type="checkbox"
-          defaultChecked={item.checked}
+          defaultChecked={checked}
           onChange={e => {
             onChange(e);
           }}
         />
         <div className={styles.item__text}>
-          <p>{item.name}</p>
-          {item.price && <p className={styles.item__price}>{item.price}원</p>}
-          {item.rate && <p className={styles.item__rate}>{item.rate}%</p>}
+          <p>{name}</p>
+          {price && <p className={styles.item__price}>{price}원</p>}
+          {rate && <p className={styles.item__rate}>{rate}%</p>}
         </div>
       </label>
     </li>

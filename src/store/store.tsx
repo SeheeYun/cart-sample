@@ -11,14 +11,12 @@ type ServiceItem = {
   readonly name: string;
   readonly price: number;
   count: number;
-  checked: boolean;
   total: number;
 };
 type DiscountItem = {
   readonly id: string;
   readonly name: string;
   readonly rate: number;
-  checked: boolean;
   total: number;
 };
 export type Item = ServiceItem & DiscountItem;
@@ -71,7 +69,6 @@ const Store = ({ children }: Props) => {
       const _items = { ...items };
       const updated = _items[item.id];
       updated.count = item.count + 1;
-      updated.total = updated.count * updated.price;
       return _items;
     });
   };
@@ -83,8 +80,15 @@ const Store = ({ children }: Props) => {
       const _items = { ...items };
       const updated = _items[item.id];
       updated.count = item.count - 1;
-      updated.total = updated.count * updated.price;
       return _items;
+    });
+  };
+
+  const setItemTotal = (id: string, total: number) => {
+    setCartItems(items => {
+      const updated = { ...items };
+      updated[id]['total'] = total;
+      return updated;
     });
   };
 
@@ -121,6 +125,7 @@ const Store = ({ children }: Props) => {
     resetChecked,
     increase,
     decrease,
+    setItemTotal,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -142,6 +147,7 @@ type ContextType = {
   resetChecked: () => void;
   increase: (item: Item) => void;
   decrease: (item: Item) => void;
+  setItemTotal: (id: string, total: number) => void;
 };
 const ContextDefaultValues: ContextType = {
   items: {},
@@ -154,6 +160,7 @@ const ContextDefaultValues: ContextType = {
   resetChecked: () => {},
   increase: () => {},
   decrease: () => {},
+  setItemTotal: () => {},
 };
 const Context = createContext<ContextType>(ContextDefaultValues);
 export function useStore() {

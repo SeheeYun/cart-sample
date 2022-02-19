@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BaseContainer from './base';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -6,18 +6,28 @@ import { Link } from 'react-router-dom';
 import { useStore } from '../store/store';
 import ServiceItem from '../components/item/serviceItem';
 import DiscountItem from '../components/item/discountItem';
-import DiscountModal from '../components/modal/discountModal';
 
 function Cart() {
-  const { cartItems, deleteCartItem, resetChecked, increase, decrease } =
-    useStore();
+  const {
+    cartItems,
+    deleteCartItem,
+    resetChecked,
+    increase,
+    decrease,
+    setItemTotal,
+  } = useStore();
 
   useEffect(() => {
     resetChecked();
   }, []);
 
+  const total = Object.keys(cartItems)
+    .filter(key => cartItems[key].total)
+    .map(key => cartItems[key].total)
+    .reduce((a, b) => a + b, 0);
+
   return (
-    <BaseContainer type={'cart'}>
+    <BaseContainer type={'cart'} total={total}>
       <>
         <div className="main__btns">
           <button>
@@ -37,10 +47,11 @@ function Cart() {
             .map(key => (
               <ServiceItem
                 key={key}
-                item={{ ...cartItems[key], id: key }}
+                item={cartItems[key]}
                 deleteCartItem={deleteCartItem}
                 increase={increase}
                 decrease={decrease}
+                setItemTotal={setItemTotal}
               />
             ))}
           {Object.keys(cartItems)
@@ -48,12 +59,13 @@ function Cart() {
             .map(key => (
               <DiscountItem
                 key={key}
-                item={{ ...cartItems[key], id: key }}
+                item={cartItems[key]}
+                cartItems={cartItems}
                 deleteCartItem={deleteCartItem}
+                setItemTotal={setItemTotal}
               />
             ))}
         </ul>
-        {/* <DiscountModal /> */}
       </>
     </BaseContainer>
   );

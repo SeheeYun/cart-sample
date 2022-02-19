@@ -4,7 +4,6 @@ import MenuItem from '../components/item/menuItem';
 
 function Discount() {
   const { discounts, addCheckedItem, deleteCheckedItem } = useStore();
-
   return (
     <BaseContainer
       type={'menu'}
@@ -15,9 +14,10 @@ function Discount() {
         {Object.keys(discounts).map(key => (
           <MenuItem
             key={key}
-            item={{ ...discounts[key], id: key, checked: false }}
-            addCheckedItem={addCheckedItem}
-            deleteCheckedItem={deleteCheckedItem}
+            item={{ ...discounts[key], id: key }}
+            checked={false}
+            onChecked={addCheckedItem}
+            offChecked={deleteCheckedItem}
           />
         ))}
       </ul>
