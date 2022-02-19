@@ -62,26 +62,24 @@ const Store = ({ children }: Props) => {
   };
 
   const increase = (item: Item) => {
-    if (item.count >= 100) {
+    const { id, count } = item;
+    if (count >= 100) {
       return;
     }
-    setCartItems(items => {
-      const _items = { ...items };
-      const updated = _items[item.id];
-      updated.count = item.count + 1;
-      return _items;
-    });
+    setCartItems(items => ({
+      ...items,
+      [id]: { ...items[id], count: count + 1 },
+    }));
   };
   const decrease = (item: Item) => {
-    if (item.count <= 1) {
+    const { id, count } = item;
+    if (count <= 1) {
       return;
     }
-    setCartItems(items => {
-      const _items = { ...items };
-      const updated = _items[item.id];
-      updated.count = item.count - 1;
-      return _items;
-    });
+    setCartItems(items => ({
+      ...items,
+      [id]: { ...items[id], count: count - 1 },
+    }));
   };
 
   const setItemTotal = (id: string, total: number) => {
