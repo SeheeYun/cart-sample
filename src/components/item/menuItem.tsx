@@ -4,15 +4,14 @@ import { Item } from '../../store/store';
 type Props = {
   item: Item;
   checked: boolean;
-  onChecked: (item: Item) => void;
-  offChecked: (item: Item) => void;
+  handleChecked: (checked: boolean, item: Item) => void;
 };
 
-function MenuItem({ item, checked, onChecked, offChecked }: Props) {
+function MenuItem({ item, checked, handleChecked }: Props) {
   const { name, price, rate } = item;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.checked ? onChecked(item) : offChecked(item);
+    handleChecked(e.target.checked, item);
   };
 
   return (

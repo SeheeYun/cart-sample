@@ -1,50 +1,57 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from './item.module.css';
-import { Item, useStore } from '../../store/store';
+import { Item, Items } from '../../store/store';
 import { useEffect, useState } from 'react';
 import DiscountModal from '../modal/discountModal';
 
 type Props = {
   item: Item;
+  items: Items;
+  deleteDiscount: (item: Item) => void;
+  setExcludedItems: (id: string, arr: string[]) => void;
+  setDicountTotal: (id: string, total: number) => void;
 };
 
-function DiscountItem({ item }: Props) {
-  const { cartItems, deleteCartItem, setItemTotal, setExcludedItems } =
-    useStore();
+function DiscountItem({
+  item,
+  items,
+  deleteDiscount,
+  setExcludedItems,
+  setDicountTotal,
+}: Props) {
   const [isModal, setIsModal] = useState(false);
   const [excluded, setExcluded] = useState<string[]>([]);
   const { name, rate, id } = item;
 
   const total =
-    Object.keys(cartItems)
-      .filter(key => key[0] === 'i' && !item.excluded.includes(key))
+    Object.keys(items)
+      .filter(key => !item.excluded.includes(key))
       .map(key => {
-        return cartItems[key].price * cartItems[key].count * rate;
+        return items[key].price * items[key].count * rate;
       })
       .reduce((a, b) => a + b, 0) * -1;
 
   const onDelete = () => {
-    deleteCartItem(item);
-  };
-
-  const toggleModal = () => {
-    setIsModal(!isModal);
-  };
-
-  const addExcluded = (item: Item) => {
-    setExcluded(keys => [...keys, item.id]);
-  };
-  const deleteExcluded = (item: Item) => {
-    setExcluded(keys => keys.filter(key => key !== item.id));
+    deleteDiscount(item);
   };
 
   const onDoneClick = () => {
     setExcludedItems(id, excluded);
   };
 
+  const toggleModal = () => {
+    setIsModal(!isModal);
+  };
+
+  const handleChecked = (checked: boolean, item: Item) => {
+    checked
+      ? setExcluded(keys => keys.filter(key => key !== item.id))
+      : setExcluded(keys => [...keys, item.id]);
+  };
+
   useEffect(() => {
-    setItemTotal(id, total);
+    setDicountTotal(id, total);
   }, [total]);
 
   return (
@@ -67,10 +74,9 @@ function DiscountItem({ item }: Props) {
       {isModal && (
         <DiscountModal
           item={item}
-          cartItems={cartItems}
+          items={items}
           toggleModal={toggleModal}
-          addExcluded={addExcluded}
-          deleteExcluded={deleteExcluded}
+          handleChecked={handleChecked}
           onDoneClick={onDoneClick}
         />
       )}

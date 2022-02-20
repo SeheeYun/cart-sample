@@ -1,17 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../store/store';
 
 type Props = {
   text?: string;
+  setLocalStorage: () => void;
 };
 
-function MenuFooter({ text }: Props) {
+function MenuFooter({ text, setLocalStorage }: Props) {
   const navigate = useNavigate();
-  const { addCartItems } = useStore();
 
   const onClick = () => {
+    setLocalStorage();
     navigate('/');
-    addCartItems();
   };
 
   return (

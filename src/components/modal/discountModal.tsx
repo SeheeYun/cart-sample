@@ -4,20 +4,18 @@ import MenuItem from '../item/menuItem';
 
 type Props = {
   item: Item;
-  cartItems: Items;
+  items: Items;
   toggleModal: () => void;
-  addExcluded: (item: Item) => void;
-  deleteExcluded: (item: Item) => void;
+  handleChecked: (checked: boolean, item: Item) => void;
   onDoneClick: () => void;
 };
 
 function DiscountModal({
   item,
-  cartItems,
+  items,
   toggleModal,
-  addExcluded,
-  deleteExcluded,
   onDoneClick,
+  handleChecked,
 }: Props) {
   const onClick = () => {
     onDoneClick();
@@ -29,15 +27,14 @@ function DiscountModal({
       <div className={styles.modal}>
         <p>{item.name}</p>
         <ul>
-          {Object.keys(cartItems)
+          {Object.keys(items)
             .filter(key => key[0] === 'i')
             .map(key => (
               <MenuItem
                 key={key}
-                item={cartItems[key]}
+                item={items[key]}
                 checked={!item.excluded.includes(key)}
-                onChecked={deleteExcluded}
-                offChecked={addExcluded}
+                handleChecked={handleChecked}
               />
             ))}
         </ul>
