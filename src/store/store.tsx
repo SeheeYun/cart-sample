@@ -46,7 +46,8 @@ const Store = ({ children }: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = process.env.REACT_APP_COLAVOLAB_API;
+      const url =
+        'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData';
       if (!url) {
         return;
       }
